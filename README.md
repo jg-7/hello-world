@@ -1,2 +1,2 @@
 # hello-world
-hello world app
+This is the hello world app - developer homework
