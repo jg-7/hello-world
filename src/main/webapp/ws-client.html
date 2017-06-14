@@ -7,7 +7,9 @@
 <script>
 	$(document).ready(function(){
 		$("#btnSubmit").click(function(){
-			$("#divRetDisp").html($("#tbInput").val());
+			var inputText = encodeURI($("#tbInput").val());
+			$("#divRetDisp").load("http://localhost:8080/hello-world/rest/hello-ws/"+inputText);
+			
 		});
 	});		
 </script>
