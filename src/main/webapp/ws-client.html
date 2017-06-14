@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Web Service Client</title>
+<script src="jquery-3.2.1.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#btnSubmit").click(function(){
+			$("#divRetDisp").html($("#tbInput").val());
+		});
+	});		
+</script>
+</head>
+<body>
+	<input type="text" id="tbInput"/>
+	<button id="btnSubmit">Done</button>
+	<br>
+	<div id="divRetDisp"></div>
+</body>
+</html>
