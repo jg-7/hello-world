@@ -20,32 +20,22 @@ public class HelloWS {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getText(@PathParam("param") String text){
-		//String txt = dbCon();
-		//System.out.println("txt="+txt);
+		storeText(text);
 		return text;
 	}
 	
-	public String dbCon(){
-		String txt="";
+	public boolean storeText(String txt){
 		int id=0;
 		String connURL = "jdbc:mysql://localhost:3306/jg_schema";
+		boolean res=false;
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			Connection conn = DriverManager.getConnection(connURL, "root", "password");
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM messages");
-			ResultSet rs = statement.executeQuery();
-			if(rs!=null){
-				while(rs.next()){
-					id = rs.getInt("ID");
-					txt = rs.getString("TEXT");
-					//Date dt = rs.getDate("Created");
-				}
-			}
-			
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO messages (message) VALUES ('"+txt+"');");
+			res = statement.execute();			
 		}catch(Exception se){
 			System.out.println(se.getMessage());
 		}
-		return txt;
-		
+		return res;		
 	}
 }

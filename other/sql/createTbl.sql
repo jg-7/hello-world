@@ -4,4 +4,4 @@ CREATE TABLE messages (
      created DATETIME DEFAULT CURRENT_TIMESTAMP,
      PRIMARY KEY (id)
 );
-INSERT TO messages message VALUES ('test msg');
+INSERT INTO messages (message) VALUES ('test msg');
