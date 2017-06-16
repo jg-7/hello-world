@@ -1,7 +1,7 @@
-CREATE TABLE messages (
+CREATE TABLE message (
      id MEDIUMINT NOT NULL AUTO_INCREMENT,
-     message CHAR(100) NOT NULL,
+     msg_text CHAR(100) NOT NULL,
      created DATETIME DEFAULT CURRENT_TIMESTAMP,
      PRIMARY KEY (id)
 );
-INSERT INTO messages (message) VALUES ('test msg');
+INSERT INTO message (msg_text) VALUES ('test msg');
