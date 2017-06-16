@@ -1,4 +1,4 @@
-	package com.jg.helloworld.dao;
+package com.jg.helloworld.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,21 +14,22 @@ public class MessageDao{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			this.connection = DriverManager.getConnection(connURL, "root", "password");
 		}catch(Exception e){
-			System.out.println("Opening connectin failed with error: " + e.getMessage());
+			System.out.println("Opening connection failed with error: " + e.getMessage());
 		}	
 	}
 	
-	public boolean insertMsg(String txt){
-		boolean res = false;
-		
+	public boolean insertMsg(String txt){		
 		try{
+			System.out.println("conn is closed="+connection.isClosed());
+		
 			PreparedStatement statement = connection.prepareStatement("INSERT INTO message (msg_text) VALUES ('"+txt+"');");
-			res = statement.execute();		
+			statement.execute();		
 		}catch(SQLException se){
 			System.out.println("Execution of insert failed with error: "+se.getMessage());
+			return false;
 		}
-
-		return res;		
+		//System.out.println("res="+res);
+		return true;		
 	}
 	
 	public void close(){

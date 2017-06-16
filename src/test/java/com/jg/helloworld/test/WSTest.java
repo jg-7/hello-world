@@ -11,6 +11,8 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.ClientResponse;
 
+import com.jg.helloworld.dao.*;
+
 public class WSTest {
 
 	@Test
@@ -32,6 +34,19 @@ public class WSTest {
 		//Negative test
 		assertEquals("Should return 404 status code", 404, response.getStatus());
 
+	}
+	//@Test
+	public void testDAO(){
+		MessageDao dao = new MessageDao();
+		boolean bResult = dao.insertMsg("unit test text");
+		assertTrue("Insert operation should return true if successful", bResult);
+		dao.close();
+		
+		//Negative test
+		dao = new MessageDao();
+		bResult = dao.insertMsg("01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
+		assertFalse("Insert operation should fail - msg too big", bResult);
+		dao.close();
 	}
 
 }
