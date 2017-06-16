@@ -35,15 +35,13 @@ public class WSTest {
 		assertEquals("Should return 404 status code", 404, response.getStatus());
 
 	}
-	//@Test
+	@Test
 	public void testDAO(){
 		MessageDao dao = new MessageDao();
 		boolean bResult = dao.insertMsg("unit test text");
 		assertTrue("Insert operation should return true if successful", bResult);
-		dao.close();
 		
 		//Negative test
-		dao = new MessageDao();
 		bResult = dao.insertMsg("01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
 		assertFalse("Insert operation should fail - msg too big", bResult);
 		dao.close();
