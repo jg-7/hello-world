@@ -4,35 +4,68 @@
 <meta charset="UTF-8">
 <title>Web Service Client</title>
 <link rel="stylesheet" href="jquery-lib/qunit-2.3.3.css">
+<link rel="stylesheet" href="helloworld.css">
 <script src="jquery-lib/jquery-3.2.1.js"></script>
 <script src="jquery-lib/qunit-2.3.3.js"></script>
 	<script>
 		$(document).ready(function(){
 			$("#btnSubmit").click(function(){
-				var inputText = encodeURI($("#tbInput").val());
-				$("#divRetDisp").load("http://localhost:8080/hello-world/rest/hello-ws/"+inputText);
+				$.post("http://localhost:8080/hello-world/rest/hello-ws/post",
+					{
+						"user": $("#tbUser").val(),
+						"text": $("#tbInput").val()
+					},
+					function(data){
+						//alert("data="+data);
+						//$("#divRetDisp").html(data);
+
+
+  var items = [];
+  $.each( data, function( key, val ) {
+	  if(key=="last-msg"){
+		$("#divRetDisp").html(val);
+	  }else{
+    	items.push( "<tr id='" + key + "'><td>" + val.msg +"</td><td>"+val.created+"</td></tr>" );
+	  }
+  });
+
+$("#divMsgs").html("<table><tr><th>Message</th><th>Created</th></tr>"+items.join( "" )+"</table>");
+
+
+
+
+
+
+					}					
+				);
 			});
+
+
+
 		});		
 	</script>
 	
 	<!-- QUnit tests -->
-	<script>
+	<!--script>
 		$(document).ready(function(){
-			var s = "TeSt String";
+			var testTxt = "TeSt String";
+			var testUsr = "tester";
 			
-			$("#tbInput").val(s);
+			$("#tbInput").val(testTxt);
+			$("#tbUser").val(testUsr);
+			
 			$("#btnSubmit").trigger("click");
 	
 			QUnit.test("Unit Test for client page", function(assert){
 		        var done = assert.async(2);
 		        
-		        <!-- Positive test case-->
+		        //Positive test case
 		        setTimeout(function() {
 		        	assert.equal(s, $("#divRetDisp").html(), "Text should be the same" );
 		           done();
 		        }, 500);
 		        
-		        <!-- Negative test case-->
+		        //Negative test case
 		        setTimeout(function() {
 		        	assert.notEqual("some other text", $("#divRetDisp").html(), "Text to compare is different" );
 		           done();
@@ -40,17 +73,29 @@
 	        });			
 		});
 
-	</script>
+	</script-->
 </head>
 <body>
-	<input type="text" id="tbInput"/>
-	<button id="btnSubmit">Done</button>
-	<br>
-	<div id="divRetDisp"></div>
+	<table>
+		<tr>
+			<td>Username:</td>
+			<td colspan="2"><input type="text" id="tbUser"></td>
+		</tr><tr>
+			<td>Text:</td>
+			<td><input type="text" id="tbInput"/></td>
+			<td><button id="btnSubmit">Done</button></td>
+		</tr><tr>
+			<td colspan="3"><div id="divRetDisp"></div></td>
+		</tr>
+	</table><br><br><br>
+	<div id="divMsgs" class="hw-div"></div>
 
 	<!-- Unit Test-->
-	<div id="qunit"></div>
-	<div id="qunit-fixture"></div>
+	<!-- div id="qunit-section">
+		<h3>QUnit section:</h3>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+	</div-->
 
 </body>
 </html>

@@ -6,6 +6,10 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.jg.helloworld.dao.*;
 
 import javax.ws.rs.GET;
@@ -23,17 +27,26 @@ public class HelloWS {
 		System.out.println("in getText() text="+text);
 		
 		MessageDao dao = new MessageDao();
-		dao.insertMsg(text);
+		dao.insertMsg("unknown", text);
 		dao.close();
 		
 		return text;
 	}
 	
 	@POST
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/post")
 	public String user(@FormParam("user") String user, @FormParam("text") String text){
-	System.out.println("in user() user="+user+" text="+text);
-		return text;
+		System.out.println("in user() user="+user+" text="+text);
+		
+		MessageDao dao = new MessageDao();
+		dao.insertMsg(user, text);
+		JSONObject rsJSON = dao.getMsgs(user);
+		rsJSON.put("last-msg", text);
+		System.out.println("rsSON="+rsJSON.toString());
+		
+		dao.close();
+		
+		return rsJSON.toString(); 
 	}
 }

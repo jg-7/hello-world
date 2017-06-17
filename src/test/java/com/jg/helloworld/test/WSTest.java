@@ -15,7 +15,7 @@ import com.jg.helloworld.dao.*;
 
 public class WSTest {
 
-	@Test
+	//@Test
 	public void test() {
 		Client client = Client.create();
 		String wsURL = "http://localhost:8080/hello-world/rest/hello-ws/";
@@ -35,14 +35,15 @@ public class WSTest {
 		assertEquals("Should return 404 status code", 404, response.getStatus());
 
 	}
-	@Test
+	
+	//@Test
 	public void testDAO(){
 		MessageDao dao = new MessageDao();
-		boolean bResult = dao.insertMsg("unit test text");
+		boolean bResult = dao.insertMsg("tester", "unit test text");
 		assertTrue("Insert operation should return true if successful", bResult);
 		
 		//Negative test
-		bResult = dao.insertMsg("01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
+		bResult = dao.insertMsg("tester", "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
 		assertFalse("Insert operation should fail - msg too big", bResult);
 		dao.close();
 	}
