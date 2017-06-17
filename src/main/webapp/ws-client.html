@@ -9,9 +9,19 @@
 	<script>
 		$(document).ready(function(){
 			$("#btnSubmit").click(function(){
-				var inputText = encodeURI($("#tbInput").val());
-				$("#divRetDisp").load("http://localhost:8080/hello-world/rest/hello-ws/"+inputText);
+				$.post("http://localhost:8080/hello-world/rest/hello-ws/post",
+					{
+						"user": $("#tbUser").val(),
+						"text": $("#tbInput").val()
+					},
+					function(data){
+						$("#divRetDisp").html(data);
+					}
+				);
 			});
+
+
+
 		});		
 	</script>
 	
@@ -43,14 +53,25 @@
 	</script>
 </head>
 <body>
-	<input type="text" id="tbInput"/>
-	<button id="btnSubmit">Done</button>
-	<br>
-	<div id="divRetDisp"></div>
+	<table>
+		<tr>
+			<td>Username:</td>
+			<td colspan="2"><input type="text" id="tbUser"></td>
+		</tr><tr>
+			<td>Text:</td>
+			<td><input type="text" id="tbInput"/></td>
+			<td><button id="btnSubmit">Done</button></td>
+		</tr><tr>
+			<td colspan="3"><div id="divRetDisp"></div></td>
+		</tr>
+	</table><br><br><br>
 
 	<!-- Unit Test-->
-	<div id="qunit"></div>
-	<div id="qunit-fixture"></div>
+	<!-- div id="qunit-section">
+		<h3>QUnit section:</h3>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+	</div-->
 
 </body>
 </html>

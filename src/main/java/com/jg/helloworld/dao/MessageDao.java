@@ -20,7 +20,7 @@ public class MessageDao{
 	
 	public boolean insertMsg(String txt){		
 		try{
-			System.out.println("conn is closed="+connection.isClosed());
+			//System.out.println("conn is closed="+connection.isClosed());
 		
 			PreparedStatement statement = connection.prepareStatement("INSERT INTO message (msg_text) VALUES ('"+txt+"');");
 			statement.execute();		
