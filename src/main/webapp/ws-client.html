@@ -29,7 +29,7 @@
 	  }
   });
 
-$("#divMsgs").html("<table><tr><th>Message</th><th>Created</th></tr>"+items.join( "" )+"</table>");
+$("#divMsgs").html("<table id='tblMsgs'><tr><th>Message</th><th>Created</th></tr>"+items.join( "" )+"</table>");
 
 
 
@@ -46,7 +46,7 @@ $("#divMsgs").html("<table><tr><th>Message</th><th>Created</th></tr>"+items.join
 	</script>
 	
 	<!-- QUnit tests -->
-	<!--script>
+	<script>
 		$(document).ready(function(){
 			var testTxt = "TeSt String";
 			var testUsr = "tester";
@@ -57,14 +57,25 @@ $("#divMsgs").html("<table><tr><th>Message</th><th>Created</th></tr>"+items.join
 			$("#btnSubmit").trigger("click");
 	
 			QUnit.test("Unit Test for client page", function(assert){
-		        var done = assert.async(2);
+		        var done = assert.async(4);
 		        
 		        //Positive test case
 		        setTimeout(function() {
-		        	assert.equal(s, $("#divRetDisp").html(), "Text should be the same" );
+		        	assert.equal(testTxt, $("#divRetDisp").html(), "Text should be the same" );
 		           done();
 		        }, 500);
 		        
+		        setTimeout(function() {
+		        	assert.equal(testUsr, $("#tbUser").val(), "User shoud remain unchanged" );
+		           done();
+		        }, 500);
+
+				// There should be at least one row: the one used in this test + header = at least 2
+		        setTimeout(function() {
+		        	assert.notEqual(1, $("#tblMsgs tr").length, "Mesages are not empty" );
+		           done();
+		        }, 500);
+
 		        //Negative test case
 		        setTimeout(function() {
 		        	assert.notEqual("some other text", $("#divRetDisp").html(), "Text to compare is different" );
@@ -73,7 +84,7 @@ $("#divMsgs").html("<table><tr><th>Message</th><th>Created</th></tr>"+items.join
 	        });			
 		});
 
-	</script-->
+	</script>
 </head>
 <body>
 	<table>
@@ -91,11 +102,11 @@ $("#divMsgs").html("<table><tr><th>Message</th><th>Created</th></tr>"+items.join
 	<div id="divMsgs" class="hw-div"></div>
 
 	<!-- Unit Test-->
-	<!-- div id="qunit-section">
+	<div id="qunit-section">
 		<h3>QUnit section:</h3>
 		<div id="qunit"></div>
 		<div id="qunit-fixture"></div>
-	</div-->
+	</div>
 
 </body>
 </html>
