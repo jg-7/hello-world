@@ -15,7 +15,7 @@ import com.jg.helloworld.dao.*;
 
 public class WSTest {
 
-	//@Test
+	@Test
 	public void test() {
 		Client client = Client.create();
 		String wsURL = "http://localhost:8080/hello-world/rest/hello-ws/";
@@ -28,15 +28,14 @@ public class WSTest {
 		assertEquals("Should return 200 status code", 200, response.getStatus());
 		assertEquals("Return string must equal to input", sText, response.getEntity(String.class));
 		
-		resource = client.resource(wsURL);
-		response = resource.get(ClientResponse.class);
-		
 		//Negative test
+		resource = client.resource("http://localhost:8080/hello-world/rest/hello-wss/");
+		response = resource.get(ClientResponse.class);		
 		assertEquals("Should return 404 status code", 404, response.getStatus());
-
+		
 	}
 	
-	//@Test
+	@Test
 	public void testDAO(){
 		MessageDao dao = new MessageDao();
 		boolean bResult = dao.insertMsg("tester", "unit test text");
@@ -47,5 +46,23 @@ public class WSTest {
 		assertFalse("Insert operation should fail - msg too big", bResult);
 		dao.close();
 	}
+	
+	@Test
+	public void testPost(){
+		Client client = Client.create();
+		String wsURL = "http://localhost:8080/hello-world/rest/hello-ws/post";
+		String sUsr = "tester";
+		String sText = "post test"; 
 
+		WebResource resource = client.resource(wsURL+"?user="+sUsr+"&text="+sText.replaceAll("\\s", "%20"));
+		ClientResponse response = resource.post(ClientResponse.class);
+		
+		//Run the assertion
+		assertEquals("Should return 200 status code", 200, response.getStatus());
+		
+		//Negative test
+		resource = client.resource("http://localhost:8080/hello-world/rest/hello-ws/");
+		response = resource.get(ClientResponse.class);
+		assertEquals("Should return 405 status code", 405, response.getStatus());
+	}
 }
