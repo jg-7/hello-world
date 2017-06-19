@@ -16,26 +16,16 @@
 						"text": $("#tbInput").val()
 					},
 					function(data){
-						//alert("data="+data);
-						//$("#divRetDisp").html(data);
+						var items = [];
+						$.each( data, function( key, val ) {
+							if(key=="last-msg"){
+								$("#divRetDisp").html(val);
+							}else{
+								items.push( "<tr id='" + key + "'><td>" + val.msg +"</td><td>"+val.created+"</td></tr>" );
+							}
+						});
 
-
-  var items = [];
-  $.each( data, function( key, val ) {
-	  if(key=="last-msg"){
-		$("#divRetDisp").html(val);
-	  }else{
-    	items.push( "<tr id='" + key + "'><td>" + val.msg +"</td><td>"+val.created+"</td></tr>" );
-	  }
-  });
-
-$("#divMsgs").html("<table id='tblMsgs'><tr><th>Message</th><th>Created</th></tr>"+items.join( "" )+"</table>");
-
-
-
-
-
-
+						$("#divMsgs").html("<table id='tblMsgs'><tr><th>Message</th><th>Created</th></tr>"+items.join( "" )+"</table>");
 					}					
 				);
 			});
@@ -46,7 +36,7 @@ $("#divMsgs").html("<table id='tblMsgs'><tr><th>Message</th><th>Created</th></tr
 	</script>
 	
 	<!-- QUnit tests -->
-	<script>
+	<!--script>
 		$(document).ready(function(){
 			var testTxt = "TeSt String";
 			var testUsr = "tester";
@@ -84,7 +74,7 @@ $("#divMsgs").html("<table id='tblMsgs'><tr><th>Message</th><th>Created</th></tr
 	        });			
 		});
 
-	</script>
+	</script-->
 </head>
 <body>
 	<table>
@@ -102,11 +92,11 @@ $("#divMsgs").html("<table id='tblMsgs'><tr><th>Message</th><th>Created</th></tr
 	<div id="divMsgs" class="hw-div"></div>
 
 	<!-- Unit Test-->
-	<div id="qunit-section">
+	<!--div id="qunit-section">
 		<h3>QUnit section:</h3>
 		<div id="qunit"></div>
 		<div id="qunit-fixture"></div>
-	</div>
+	</div-->
 
 </body>
 </html>
