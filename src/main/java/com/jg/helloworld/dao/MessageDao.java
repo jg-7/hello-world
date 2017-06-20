@@ -52,7 +52,7 @@ public class MessageDao{
 	
 	public JSONObject getMsgs(String usr){
 		System.out.println(">>>Start getMsgs()");
-		String msg;
+		String msg, rpl;
 		String created;
 		int id;
 		
@@ -65,10 +65,12 @@ public class MessageDao{
 			while(rs!=null&&rs.next()){
 				id=rs.getInt("id");
 				msg=rs.getString("msg_text");
+				rpl=rs.getString("rpl_text");
 				created=rs.getString("created");
 				
 				rowJSON = new JSONObject();
 				rowJSON.put("msg", msg);
+				rowJSON.put("rpl", rpl);
 				rowJSON.put("created", created);
 				
 				rsJSON.put(String.valueOf(id), rowJSON);
