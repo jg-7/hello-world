@@ -14,6 +14,7 @@ import com.jg.helloworld.dao.*;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 
 
 
@@ -54,13 +55,14 @@ public class HelloWS {
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/postrpl")
 	public String setReply(@FormParam("user") String user, @FormParam("msgid") String msgid, @FormParam("rpl") String rpl){
-		System.out.println("in setReply() user="+user+" msgid="+msgid+" rpl="+rpl);
+		System.out.println(">>> setReply() user="+user+" msgid="+msgid+" rpl="+rpl);
 		
 		MessageDao dao = new MessageDao();
-		boolean bSuccess = dao.insertRpl(user, msgid, rpl);
+		int intRet = dao.insertRpl(user, msgid, rpl);
+		System.out.println("setReply()::intRet="+intRet);
 		
 		dao.close();
 		
-		return String.valueOf(bSuccess);
+		return String.valueOf(intRet);
 	}
 }

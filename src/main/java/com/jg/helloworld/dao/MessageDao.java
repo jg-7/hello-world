@@ -37,17 +37,17 @@ public class MessageDao{
 		return true;		
 	}
 	
-	public boolean insertRpl(String usr, String msgid, String rpl){				
-		//System.out.println("conn is closed="+connection.isClosed());
+	public int insertRpl(String usr, String msgid, String rpl){				
+		System.out.println(">>> insertRpl() usr="+usr+" msgid="+msgid+" rpl="+rpl);
 		try{
 			statement = connection.prepareStatement("UPDATE message SET rpl_text='"+rpl+"' WHERE id="+msgid+";");
-			statement.execute();		
+			int intRet = statement.executeUpdate();		
+			System.out.println("bRet="+intRet);
+			return intRet;
 		}catch(SQLException se){
 			System.out.println("Execution of update failed with error: "+se.getMessage());
-			return false;
-		}
-		//System.out.println("res="+res);
-		return true;		
+			return 0;
+		}	
 	}
 	
 	public JSONObject getMsgs(String usr){
