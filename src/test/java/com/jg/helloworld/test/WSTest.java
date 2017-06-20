@@ -15,7 +15,7 @@ import com.jg.helloworld.dao.*;
 
 public class WSTest {
 
-	@Test
+	//@Test
 	public void test() {
 		Client client = Client.create();
 		String wsURL = "http://localhost:8080/hello-world/rest/hello-ws/";
@@ -35,7 +35,7 @@ public class WSTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testDAO(){
 		MessageDao dao = new MessageDao();
 		boolean bResult = dao.insertMsg("tester", "unit test text");
@@ -47,7 +47,7 @@ public class WSTest {
 		dao.close();
 	}
 	
-	@Test
+	//@Test
 	public void testPost(){
 		Client client = Client.create();
 		String wsURL = "http://localhost:8080/hello-world/rest/hello-ws/post";

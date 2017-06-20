@@ -17,18 +17,48 @@
 					},
 					function(data){
 						var items = [];
-						$.each( data, function( key, val ) {
+						$.each( data, function(key, val) {
 							if(key=="last-msg"){
 								$("#divRetDisp").html(val);
 							}else{
-								items.push( "<tr id='" + key + "'><td>" + val.msg +"</td><td>"+val.created+"</td></tr>" );
+								items.push("<tr id='" + key + "' onclick='$(\"#"+key+"_rep\").css(\"display\",\"inline\")'><td>" + val.msg +"</td><td>"+val.created+"</td></tr>");
+								items.push("<tr id='" + key + "_rep' style='display:none'><td colspan='2' id='td_"+key+"'><input type='text'/></td></tr>");
 							}
 						});
 
 						$("#divMsgs").html("<table id='tblMsgs'><tr><th>Message</th><th>Created</th></tr>"+items.join( "" )+"</table>");
+
+
+
+						$.each( data, function(key, val) {
+							if(key!="last-msg"){
+								$("<input/>",{type: "button", 
+									id: "btnRep_"+key,
+									val:"Reply", 
+									"height": "25px",
+									"css" : {"background-color" : "#4286f4"},
+									click: function(){
+										alert("I am: "+this.id+" and you are: "+$("#td_"+key).attr("id")+"and msg is: "+val.msg);
+									}
+								}).appendTo($("#td_"+key));
+							}
+						});
+
+
+
+
+
 					}					
 				);
+
+
+
+
 			});
+
+			//$(document.createElement("input")).attr({id:"123", type:"button"}).appendTo(158);
+	
+
 
 
 
