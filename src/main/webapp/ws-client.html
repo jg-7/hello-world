@@ -22,13 +22,11 @@
 								$("#divRetDisp").html(val);
 							}else{
 								items.push("<tr id='" + key + "' onclick='$(\"#"+key+"_rep\").css(\"display\",\"inline\")'><td>" + val.msg +"</td><td>"+val.created+"</td></tr>");
-								items.push("<tr id='" + key + "_rep' style='display:none'><td colspan='2' id='td_"+key+"'><input type='text'/></td></tr>");
+								items.push("<tr id='" + key + "_rep' style='display:none'><td colspan='2' id='td_"+key+"'><input id='tbRep_"+key+"' type='text'/></td></tr>");
 							}
 						});
 
 						$("#divMsgs").html("<table id='tblMsgs'><tr><th>Message</th><th>Created</th></tr>"+items.join( "" )+"</table>");
-
-
 
 						$.each( data, function(key, val) {
 							if(key!="last-msg"){
@@ -38,30 +36,26 @@
 									"height": "25px",
 									"css" : {"background-color" : "#4286f4"},
 									click: function(){
-										alert("I am: "+this.id+" and you are: "+$("#td_"+key).attr("id")+"and msg is: "+val.msg);
+										$.post("http://localhost:8080/hello-world/rest/hello-ws/postrpl",
+										{
+											"user": $("#tbUser").val(),
+											"msgid": key,
+											"rpl": $("#tbRep_"+key).val()
+										},
+										function(data){
+											if(data){
+												$("#"+key+"_rep").html("&emsp;"+$("#tbRep_"+key).val());
+											}else{
+												alert("Something went wrong on the server side - please try again and if the problem persists notify support team");
+											}
+										});
 									}
 								}).appendTo($("#td_"+key));
 							}
 						});
-
-
-
-
-
 					}					
 				);
-
-
-
-
 			});
-
-			//$(document.createElement("input")).attr({id:"123", type:"button"}).appendTo(158);
-	
-
-
-
-
 		});		
 	</script>
 	

@@ -49,4 +49,18 @@ public class HelloWS {
 		
 		return rsJSON.toString(); 
 	}
+	
+	@POST
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("/postrpl")
+	public String setReply(@FormParam("user") String user, @FormParam("msgid") String msgid, @FormParam("rpl") String rpl){
+		System.out.println("in setReply() user="+user+" msgid="+msgid+" rpl="+rpl);
+		
+		MessageDao dao = new MessageDao();
+		boolean bSuccess = dao.insertRpl(user, msgid, rpl);
+		
+		dao.close();
+		
+		return String.valueOf(bSuccess);
+	}
 }

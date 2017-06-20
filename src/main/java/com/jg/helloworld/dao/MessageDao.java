@@ -37,6 +37,19 @@ public class MessageDao{
 		return true;		
 	}
 	
+	public boolean insertRpl(String usr, String msgid, String rpl){				
+		//System.out.println("conn is closed="+connection.isClosed());
+		try{
+			statement = connection.prepareStatement("UPDATE message SET rpl_text='"+rpl+"' WHERE id="+msgid+";");
+			statement.execute();		
+		}catch(SQLException se){
+			System.out.println("Execution of update failed with error: "+se.getMessage());
+			return false;
+		}
+		//System.out.println("res="+res);
+		return true;		
+	}
+	
 	public JSONObject getMsgs(String usr){
 		System.out.println(">>>Start getMsgs()");
 		String msg;
