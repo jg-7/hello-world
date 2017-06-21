@@ -23,14 +23,14 @@
 							}else{
 								items.push("<tr id='" + key + "' onclick='$(\"#"+key+"_rep\").css(\"display\",\"inline\")'><td>" + val.msg +"</td><td>"+val.created+"</td></tr>");
 								if(val.rpl==null||val.rpl===undefined){
-									items.push("<tr id='" + key + "_rep' style='display:none'><td colspan='2' id='td_"+key+"'><input id='tbRep_"+key+"' type='text'/></td></tr>");
+									items.push("<tr id='" + key + "_rep' style='display:none'><td colspan='2' style='padding-left:35px' id='td_"+key+"'><input id='tbRep_"+key+"' type='text'/></td></tr>");
 								}else{
-									items.push("<tr id='" + key + "_rep' style='display:inline'><td colspan='2' id='td_"+key+"'>&emsp;"+val.rpl+"</td></tr>");
+									items.push("<tr id='" + key + "_rep' style='display:inline'><td colspan='2' style='padding-left:35px' id='td_"+key+"'>"+val.rpl+"</td></tr>");
 								}
 							}
 						});
 
-						$("#divMsgs").html("<table id='tblMsgs'><tr><th>Message</th><th>Created</th></tr>"+items.join( "" )+"</table>");
+						$("#divMsgs").html("<table id='tblMsgs'><tr><th>Message</th><th>Created</th></tr>"+items.join("")+"</table>");
 
 						$.each(data, function(key, val) {
 							if(key!="last-msg"&&(val.rpl==null||val.rpl===undefined)){
@@ -38,7 +38,7 @@
 									id: "btnRep_"+key,
 									val:"Reply", 
 									"height": "25px",
-									"css" : {"background-color" : "#4286f4"},
+									"css": {"background-color" : "#4286f4", "color" : "#d1e2ff"},
 									click: function(){
 										$.post("http://localhost:8080/hello-world/rest/hello-ws/postrpl",
 										{
@@ -48,7 +48,7 @@
 										},
 										function(data){
 											if(data){
-												$("#"+key+"_rep").html("&emsp;"+$("#tbRep_"+key).val());
+												$("#td_"+key).html($("#tbRep_"+key).val());
 											}else{
 												alert("Something went wrong on the server side - please try again and if the problem persists notify support team");
 											}
@@ -64,7 +64,7 @@
 	</script>
 	
 	<!-- QUnit tests -->
-	<!--script>
+	<script>
 		$(document).ready(function(){
 			var testTxt = "TeSt String";
 			var testUsr = "tester";
@@ -75,7 +75,7 @@
 			$("#btnSubmit").trigger("click");
 	
 			QUnit.test("Unit Test for client page", function(assert){
-		        var done = assert.async(4);
+		        var done = assert.async(5);
 		        
 		        //Positive test case
 		        setTimeout(function() {
@@ -99,10 +99,16 @@
 		        	assert.notEqual("some other text", $("#divRetDisp").html(), "Text to compare is different" );
 		           done();
 		        }, 500);
+
+				// Reply text test
+		        setTimeout(function() {
+		        	assert.equal("test rpl", $("#td_1").html(), "Reply to first test message is known" );
+		           done();
+		        }, 500);				
 	        });			
 		});
 
-	</script-->
+	</script>
 </head>
 <body>
 	<table>
@@ -120,11 +126,11 @@
 	<div id="divMsgs" class="hw-div"></div>
 
 	<!-- Unit Test-->
-	<!--div id="qunit-section">
+	<div id="qunit-section">
 		<h3>QUnit section:</h3>
 		<div id="qunit"></div>
 		<div id="qunit-fixture"></div>
-	</div-->
+	</div>
 
 </body>
 </html>
