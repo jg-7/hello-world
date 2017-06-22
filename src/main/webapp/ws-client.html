@@ -8,12 +8,30 @@
 <script src="jquery-lib/jquery-3.2.1.js"></script>
 <script src="jquery-lib/qunit-2.3.3.js"></script>
 	<script>
+		function valForm(){
+			if($.trim($("#tbUser").val())===""){
+				alert("Enter user name");
+				return false;
+			}
+			if($.trim($("#tbInput").val())===""){
+				alert("Enter message");
+				return false;
+			}
+			if($.trim($("#tbCity").val())===""){
+				alert("Enter city");
+				return false;
+			}
+			return true;
+		}
+
 		$(document).ready(function(){
 			$("#btnSubmit").click(function(){
+				if(!valForm()) return false;
 				$.post("http://localhost:8080/hello-world/rest/hello-ws/post",
 					{
 						"user": $("#tbUser").val(),
-						"text": $("#tbInput").val()
+						"text": $("#tbInput").val(),
+						"city": $("#tbCity").val()
 					},
 					function(data){
 						var items = [];
@@ -68,9 +86,11 @@
 		$(document).ready(function(){
 			var testTxt = "TeSt String";
 			var testUsr = "tester";
+			var testCity = "Toronto";
 			
 			$("#tbInput").val(testTxt);
 			$("#tbUser").val(testUsr);
+			$("#tbCity").val(testCity);
 			
 			$("#btnSubmit").trigger("click");
 	
@@ -111,14 +131,16 @@
 	</script>
 </head>
 <body>
-	<table>
+	<table cellpadding="2">
 		<tr>
-			<td>Username:</td>
-			<td colspan="2"><input type="text" id="tbUser"></td>
+			<td align="right">Username:</td>
+			<td><input type="text" id="tbUser"></td>
+			<td align="right">City:</td>
+			<td><input type="text" id="tbCity"></td>			
 		</tr><tr>
-			<td>Text:</td>
+			<td align="right">Text:</td>
 			<td><input type="text" id="tbInput"/></td>
-			<td><button id="btnSubmit">Done</button></td>
+			<td><button id="btnSubmit" colspan="2">Done</button></td>
 		</tr><tr>
 			<td colspan="3"><div id="divRetDisp"></div></td>
 		</tr>

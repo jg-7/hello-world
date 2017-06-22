@@ -28,7 +28,7 @@ public class HelloWS {
 		System.out.println("in getText() text="+text);
 		
 		MessageDao dao = new MessageDao();
-		dao.insertMsg("unknown", text);
+		dao.insertMsg("unknown", text, "unknown");
 		dao.close();
 		
 		return text;
@@ -37,11 +37,13 @@ public class HelloWS {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/post")
-	public String user(@FormParam("user") String user, @FormParam("text") String text){
-		System.out.println("in user() user="+user+" text="+text);
+	public String user(@FormParam("user") String user, 
+						@FormParam("text") String text, 
+						@FormParam("city") String city){
+		System.out.println("in user() user="+user+" text="+text+" city="+city);
 		
 		MessageDao dao = new MessageDao();
-		dao.insertMsg(user, text);
+		dao.insertMsg(user, text, city);
 		JSONObject rsJSON = dao.getMsgs(user);
 		rsJSON.put("last-msg", text);
 		System.out.println("rsSON="+rsJSON.toString());

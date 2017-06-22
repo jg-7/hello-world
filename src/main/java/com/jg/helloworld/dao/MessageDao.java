@@ -24,10 +24,10 @@ public class MessageDao{
 		}	
 	}
 	
-	public boolean insertMsg(String usr, String txt){				
+	public boolean insertMsg(String usr, String txt, String city){				
 		//System.out.println("conn is closed="+connection.isClosed());
 		try{
-			statement = connection.prepareStatement("INSERT INTO message (username, msg_text) VALUES ('"+usr+"', '"+txt+"');");
+			statement = connection.prepareStatement("INSERT INTO message (username, msg_text, city) VALUES ('"+usr+"', '"+txt+"', '"+city+"');");
 			statement.execute();		
 		}catch(SQLException se){
 			System.out.println("Execution of insert failed with error: "+se.getMessage());

@@ -38,11 +38,11 @@ public class WSTest {
 	@Test
 	public void testDAO(){
 		MessageDao dao = new MessageDao();
-		boolean bResult = dao.insertMsg("tester", "unit test text");
+		boolean bResult = dao.insertMsg("tester", "unit test text", "Toronto");
 		assertTrue("Insert operation should return true if successful", bResult);
 		
 		//Negative test
-		bResult = dao.insertMsg("tester", "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
+		bResult = dao.insertMsg("tester", "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890", "Toronto");
 		assertFalse("Insert operation should fail - msg too big", bResult);
 		dao.close();
 	}
